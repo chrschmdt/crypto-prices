@@ -1,8 +1,10 @@
 import React from 'react';
+import {BrowserRouter as Router, Route} from "react-router-dom";
 import './App.css';
 import Header from './components/header';
 import Listing from './components/listing';
 import InfoPane from './components/infoPane';
+import About from './components/pages/about';
 import axios from 'axios';
 
 
@@ -72,19 +74,22 @@ class App extends React.Component {
 
     render() {
         return (
-            <React.Fragment>
+            <Router>
                 <Header update={this.update} />
-                <div className="row" style={{ margin: '0 20px', height: 'calc(100vh - 60px)' }}>
-                    <div id="listings" className="col-md-6" style={{ padding: '0 0 20px 0', overflowY: 'scroll', maxHeight: '100%'}}>
-                        {this.state.listings.map(listing => (
-                            <Listing update={this.setInfo} key={listing.title} title={listing.title} percentChange={listing.change}/>
-                        ))}
+                <Route exact path="/" render={props => (
+                    <div className="row" style={{ margin: '0 20px', height: 'calc(100vh - 60px)' }}>
+                        <div id="listings" className="col-md-6" style={{ padding: '0 0 20px 0', overflowY: 'scroll', maxHeight: '100%'}}>
+                            {this.state.listings.map(listing => (
+                                <Listing update={this.setInfo} key={listing.title} title={listing.title} percentChange={listing.change}/>
+                            ))}
+                        </div>
+                        <div className="col-md-6" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', maxHeight: '100%', padding: '0' }}>
+                            <InfoPane title={this.state.info.title} data={this.state.info.data} desc={this.state.info.desc} price={this.state.info.price}/>
+                        </div>
                     </div>
-                    <div className="col-md-6" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', maxHeight: '100%', padding: '0' }}>
-                        <InfoPane title={this.state.info.title} data={this.state.info.data} desc={this.state.info.desc} price={this.state.info.price}/>
-                    </div>
-                </div>
-            </React.Fragment>
+                )}/>
+                <Route path="/about" component={About}/>
+            </Router>
         );
     }
 }
