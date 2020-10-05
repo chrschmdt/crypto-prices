@@ -24,7 +24,7 @@ class InfoPane extends Component {
                 <Sparklines data={used} style={{ margin: '16px 0', borderLeft: '1px solid #000', borderBottom: '1px solid #000' }} margin={0} offset={0} min={Math.min(...used) - (Math.max(...used) - Math.min(...used))}>
                     <SparklinesLine color={positive?green:red} style={{ fill: (positive?green:red) }} />
                 </Sparklines>
-                <p style={{ fontFamily: 'sans-serif', overflowWrap: 'break-word' }}>{this.props.desc}</p>
+                <p style={{ fontFamily: 'sans-serif', overflowWrap: 'break-word' }} dangerouslySetInnerHTML={{__html: this.props.desc}}> </p>
             </div>
         );
     }
